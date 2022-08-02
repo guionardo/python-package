@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import codecs
 import os
 import sys
@@ -23,6 +25,23 @@ def get_definitions(rel_path, *words):
     return [dwords[word] for word in dwords]
 
 
+def get_github_infos():
+    ghsetup = os.path.abspath('.github/setup.py')
+    if not os.path.isfile(ghsetup):
+        raise FileNotFoundError('.github/setup.py', "Run make setup first")
+    try:
+        (GITHUB_OWNER, GITHUB_REPOSITORY, GITHUB_URL, GITHUB_DOCS_URL, GITHUB_USERNAME, GITHUB_EMAIL) = get_definitions(
+            ghsetup, 'GITHUB_OWNER', 'GITHUB_REPOSITORY', 'GITHUB_URL', 'GITHUB_DOCS_URL', 'GITHUB_USERNAME', 'GITHUB_EMAIL')
+        return GITHUB_OWNER, GITHUB_REPOSITORY, GITHUB_URL, GITHUB_DOCS_URL, GITHUB_USERNAME, GITHUB_EMAIL
+    except Exception as e:
+        raise Exception(
+            f"Error reading .github/setup.py: {e}", "Run make setup again")
+
+
+if sys.argv[-1] == "publish":
+    os.system("python setup.py sdist bdist_wheel upload")
+    sys.exit()
+
 long_description = read('README.md')
 
 _name, _version, _description, _author, _author_email = get_definitions(
@@ -32,6 +51,9 @@ _name, _version, _description, _author, _author_email = get_definitions(
     'description',
     'author',
     'author_email')
+
+(GITHUB_OWNER, GITHUB_REPOSITORY, GITHUB_URL, GITHUB_DOCS_URL,
+ GITHUB_USERNAME, GITHUB_EMAIL) = get_github_infos()
 
 setup(
     name=_name,
@@ -52,11 +74,11 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8"
     ],
-    url='CHANGE_THIS',
+    url=GITHUB_URL,
     keywords='CHANGE_THIS',
     project_urls={
-        "Documentation": "CHANGE_THIS/wiki",
-        "Source": "CHANGE_THIS",
+        "Documentation": GITHUB_DOCS_URL,
+        "Source": GITHUB_URL,
     },
     author=_author,
     author_email=_author_email,
