@@ -1,1 +1,3 @@
-#  Python Package Template
+{%
+include-markdown '../README.md'
+%}

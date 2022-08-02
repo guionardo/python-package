@@ -3,4 +3,8 @@ site_url: https://github.com/guionardo/python-package
 nav:
   - Home: index.md
   - About: about.md
+  - Setup: setup.md
+
 theme: readthedocs
+plugins:
+  - include-markdown

@@ -1,0 +1,1 @@
+mkdocs-include-markdown-plugin==3.6.1
