@@ -4,7 +4,8 @@ on:
     branches:
       - develop
     paths:
-      - 'docs/*'      
+      - 'docs/*'
+      - 'README.md'
 
 jobs:
   build:
