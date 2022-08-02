@@ -1,0 +1,6 @@
+site_name: Python Package
+site_url: https://github.com/guionardo/python-package
+nav:
+  - Home: index.md
+  - About: about.md
+theme: readthedocs
